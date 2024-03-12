@@ -1,35 +1,26 @@
-from pydub import AudioSegment
-from tempfile import NamedTemporaryFile
-
-def local_test():
-    # Mock event object
-    event = {
-        'audio': 'C:/Users/jrjub/Downloads/Music/blues2.wav'  # Replace with the actual path
-    }
-    
-    # Call the lambda handler with the mock event
-    result = lambda_handler(event, None)
-    
-    # Save the output audio to a file
-    with open('output.mp3', 'wb') as f:
-        f.write(result['body'])
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lex_rank import LexRankSummarizer
 
 def lambda_handler(event, context):
-    # Get the uploaded audio file from the event
-    audio_file = event['audio']
+  # Get the text to be summarized from the event (assuming 'text' is the key)
+  text = event['text']
 
-    # Perform audio transcoding
-    audio = AudioSegment.from_file(audio_file)
-    
-    # Convert to desired format (e.g., MP3)
-    with NamedTemporaryFile(delete=False) as tmp_file:
-        output_audio = audio.export(tmp_file, format="mp3").read()
+  # Preprocess the text (optional)
+  # ... (e.g., remove stop words, clean punctuation)
 
-    # Return the transcoded audio
-    return {
-        'statusCode': 200,
-        'body': output_audio
-    }
+  # Parse the text
+  parser = PlaintextParser.from_string(text, Tokenizer('english'))
 
-# Run the local test
-local_test()
+  # Summarize the text using LexRank
+  summarizer = LexRankSummarizer()
+  summary = summarizer(parser.document, sentences=3)  # Extract 3 sentences
+
+  # Join the summary sentences into a single string
+  summary_text = ' '.join([str(sentence) for sentence in summary])
+
+  # Return the summarized text
+  return {
+      'statusCode': 200,
+      'body': summary_text
+  }
