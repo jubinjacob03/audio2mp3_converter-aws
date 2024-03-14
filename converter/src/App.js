@@ -1,71 +1,54 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function ImageConversion() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const [convertedImageData, setConvertedImageData] = useState(null);
-  const [downloadLink, setDownloadLink] = useState(null);
+function UrlShortener() {
+  const [originalUrl, setOriginalUrl] = useState('');
+  const [shortenedUrl, setShortenedUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setDownloadLink(null); // Clear download link when a new image is selected
-  };
-
-  const handleSubmit = async () => {
-    if (!selectedFile) {
-      // Handle validation errors
-      return;
-    }
-
-    setProcessing(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
     try {
-      const formData = new FormData();
-      formData.append('image', selectedFile);
-
-      const response = await axios.post('/api/convert-image', formData, { // Adjust API endpoint
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        'https://ipjesjo0va.execute-api.ap-southeast-2.amazonaws.com/url-shortner',
+        originalUrl, // Send the original URL as the request body
+        {
+          headers: {
+            'Content-Type': 'text/plain', // Set content type to text/plain for raw text
+          },
         }
-      });
-
-      setConvertedImageData(response.data.convertedImageData);
-      setDownloadLink(URL.createObjectURL(response.data)); // Create download link
+      );
+      setShortenedUrl(response.data.shortenedUrl); // Assuming the shortened URL is in the response data
     } catch (error) {
       console.error(error);
-      // Handle errors appropriately (e.g., display error message to user)
+      setError('Error shortening URL');
     } finally {
-      setProcessing(false);
+      setIsLoading(false);
     }
-  };
-
-  const handleRemoval = () => {
-    setSelectedFile(null);
-    setConvertedImageData(null);
-    setDownloadLink(null);
   };
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleRemoval} disabled={!selectedFile}>Remove Image</button>
-      <button onClick={handleSubmit} disabled={processing || !selectedFile}>
-        {processing ? 'Converting...' : 'Convert Image'}
-      </button>
-      {selectedFile && <img src={URL.createObjectURL(selectedFile)} alt="Uploaded Image" />}
-      {convertedImageData && (
-        <div>
-          <h2>Converted Image</h2>
-          <img
-            src={`data:image/jpeg;base64,${convertedImageData}`} // Adjust content type if needed
-            alt="Converted Image"
-          />
-          {downloadLink && <a href={downloadLink} download="converted_image.jpg">Download</a>}
-        </div>
-      )}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="url">Enter URL:</label>
+        <input
+          type="text"
+          id="url"
+          value={originalUrl}
+          onChange={(e) => setOriginalUrl(e.target.value)}
+        />
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Shortening...' : 'Shorten URL'}
+        </button>
+      </form>
+      {shortenedUrl && <p>Shortened URL: {shortenedUrl}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
 
-export default ImageConversion;
+export default UrlShortener;
