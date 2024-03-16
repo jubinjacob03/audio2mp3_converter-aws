@@ -1,38 +1,51 @@
-const sharp = require('sharp');
-// Handler function to be exported - Sharp Library
+import AWS from 'aws-sdk'; // Future use of DynamoDB
+import axios from 'axios'; // Use Axios to make HTTP requests
 
-async function handler(event, context) {  // async function with Event and Context - ( parameters passed by AWS Lambda )
+const handler = async (event, context) => { // Define the main handler function
+    const origin = 'http://localhost:3000'; // Replace with your frontend URL for CORS
+  const headers = {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'POST', // Specifying allowed methods (e.g., GET, POST)
+    'Access-Control-Allow-Headers': 'Content-Type', // Specifying allowed headers
+  };
   try {
-    if (event.body && event.body.blob) { // Checks for Image data in request body
-      
-      const imageBuffer = await sharp(await event.body.blob()) // Access image data from request body
-        .toFormat('jpeg') // Desired format
-        .toBuffer();  // Convert to Buffer
+    const originalUrl = event.body || event.queryStringParameters.url; // Extract the original URL from the request body or query string
 
-      const base64Image = imageBuffer.toString('base64'); // Convert to Base64
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ convertedImageData: base64Image }), // Return Base64 Image Data
-      };
-    } else {
-      // No image data provided, return a 400 Bad Request response
+    // Check if originalUrl is defined
+    if (!originalUrl) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'No image data provided' }),
+        body: 'Missing URL in request body'  // Return an error if originalUrl is not defined
       };
     }
+
+    const tinyUrl = await shortenUrlWithTinyURL(originalUrl);  // Call the function to shorten the URL
+
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ shortenedUrl: tinyUrl })  // Return the shortened URL
+    };
   } catch (error) {
     console.error(error);
-    // Catch any other errors during conversion, return a 500 Internal Server Error
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Image conversion failed' }),
+      body: JSON.stringify({ error: 'Internal Server Error' })  // Return an error if an exception is caught
     };
   }
-}
-
-module.exports = {
-  handler,
 };
-// Export the handler function
+
+const shortenUrlWithTinyURL = async (originalUrl) => {  // Define the function to shorten the URL
+  try {
+    const response = await axios.post('http://tinyurl.com/api-create.php', {  // Send a POST request to TinyURL's API
+      url: originalUrl
+    });
+
+    return response.data; // TinyURL's API directly returns the shortened URL
+  } catch (error) {
+    console.error('Error shortening URL with TinyURL:', error);
+    throw error; // Re-throw the error for handling in the main handler
+  }
+};
+
+export { handler };  // Export the handler function
