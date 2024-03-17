@@ -34,7 +34,10 @@ header {
 
 .navlist {
   display: flex;
+  list-style-type: none;
+  justify-content: space-between;
 }
+
 
 .navlist a {
   color: white;
@@ -43,6 +46,7 @@ header {
   font-weight: 600;
   border-bottom: 2px solid transparent;
   transition: all 0.55s ease;
+  text-decoration: none;
 }
 
 .navlist a:hover {
@@ -52,7 +56,7 @@ header {
 #menu-icon {
   color: white;
   font-size: 30px;
-  z-index: 10001;
+  z-index: 1000;
   cursor: pointer;
 }
 
@@ -62,7 +66,7 @@ header {
   transition: all .50s ease;
 }
 
-.hero {
+.banner {
   height: 100%;
   width: 100%;
   min-height: 100vh;
@@ -78,7 +82,7 @@ section {
   padding: 0 19%;
 }
 
-.hero-text h1{
+.banner-text h1{
   font-family: 'Rubik',sans-serif;
   font-size: 90px;
   line-height: 1;
@@ -86,25 +90,25 @@ section {
   margin: 0 0 45px;
 }
 
-.hero-text h4{
+.banner-text h4{
   font-size: 18px;
   font-weight: 600;
   color: white;
   margin-bottom: 10px;
 }
-.hero-text p{
+.banner-text p{
   color: white;
   font-size: 15px;
   line-height: 1.9;
   margin-bottom: 40px;
 }
 
-.hero-img img{
+.banner-img img{
   width: 700px;
   height: auto;
 }
 
-.hero-text a{
+.banner-text a{
   display: inline-block;
   color: white;
   background: #2596be;
@@ -118,7 +122,7 @@ section {
   transition: all 0.55s ease;
 }
 
-.hero-text button{
+.banner-text button{
   display: inline-block;
   color: white;
   background: #2596be;
@@ -132,30 +136,30 @@ section {
   transition: all 0.55s ease;
 }
 
-.hero-text button:hover{
+.banner-text button:hover{
   background: transparent;
   border: 1px solid white;
   transform: translate(8px);
 }
 
-.hero-text a:hover{
+.banner-text a:hover{
   background: transparent;
   border: 1px solid white;
   transform: translate(8px);
 }
 
-.hero-text a + a{
+.banner-text a + a{
   margin-left: 20px;
 }
 
 
-.hero-text a.ctaa{
+.banner-text a.ctaa{
   background: transparent;
   border: 1px solid white;
   margin-left: 20px;
 }
 
-.hero-text a.ctaa i{
+.banner-text a.ctaa i{
   vertical-align: middle;
   margin-right: 5px;
 }
@@ -180,6 +184,20 @@ section {
   transform: translateY(-5px);
 }
 
+.navlist-icon{
+  color: white;
+  font-size: 30px;
+  z-index: 1000;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.navlist-icon:hover{
+  color: #8ad3eb;
+  transform: translateY(5px);
+  transition: all .50s ease;
+}
 
 @media (max-width: 1535px) {
   header {
@@ -200,11 +218,11 @@ section {
 }
 
 @media (max-width: 1340px){
-  .hero-img img{
+  .banner-img img{
     width: 100%;
     height: auto;
   }
-  .hero-text h1{
+  .banner-text h1{
     font-size: 75px;
     margin: 0 0 30px;
   }
@@ -215,17 +233,17 @@ section {
     padding: 0 3%;
     transition: .2s;
   }
-  .hero-text{
+  .banner-text{
     padding-top: 115px;
   }
-  .hero-img{
+  .banner-img{
     text-align: center;
   }
-  .hero-img img{
+  .banner-img img{
     width: 560px;
     height: auto;
   }
-  .hero{
+  .banner{
     height: 100%;
     gap: 1rem;
     grid-template-columns: 1fr;
@@ -235,17 +253,116 @@ section {
   }
  }
 
+ @media (min-width: 990px){
+  .navlist-icon{
+    display: none;
+  }
+ }
+
  @media (max-width: 990px){
-  #menu-icon{
-    display: block;
+
+  .logo {
+    font-size: 1.5em;
   }
   .navlist{
     position: absolute;
     top: 100%;
     right: 0;
-    width: 300px;
+    width: 80px;
     height: 40vh;
-    background: #5fb9dd;
+    background: inherit;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 20px;
+    transition: all 0.55s ease;
+    margin-right: 8px;
+  }
+  .navlist a{
+    margin: 10px 0;
+    display: block;
+    margin-left: 0;
+  }
+  .navlist-text{
+    display: none;
+  }
+  .navlist.open{
+    right: 0;
+  }
+  .inputbox, .shorten-button, .response-box {
+    width: 60%;
+  }
+  .desc{
+    width: calc(90% - 20px);
+  }
+ }
+
+ @media (max-width: 680px){
+  .logo {
+    font-size: 1em;
+  }
+  .navlist {
+    flex-direction: column;
+    display: none;
+  }
+  .navlist li {
+    margin-bottom: 10px;
+  }
+  #menu-icon {
+    display: block;
+  }
+  .inputbox, .shorten-button, .response-box {
+    width: 90%;
+  }
+  .banner-text h1{
+    font-size: 60px;
+  }
+  .banner-text h4{
+    font-size: 16px;
+  }
+  .banner-text p{
+    font-size: 14px;
+  }
+  .banner-text a{
+    font-size: 12px;
+  }
+  .banner-text a + a{
+    margin-left: 10px;
+  }
+  .banner-text a.ctaa{
+    margin-left: 10px;
+  }
+  .banner-img img{
+    width: 100%;
+    height: auto;
+  }
+ }
+
+ @media (min-width: 601px) and (max-width: 990px) {
+  .logo {
+    font-size: 1.2em;
+  }
+  .navlist {
+    flex-direction: column;
+    display: flex;
+  }
+  .inputbox, .shorten-button, .response-box {
+    width: 80%;
+  }
+  .banner-text a.ctaa{
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 319px) and (max-width: 600px){
+  .navlist{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 70px;
+    height: 40vh;
+    background: inherit;
     border: 2px solid white;
     display: flex;
     align-items: center;
@@ -253,40 +370,57 @@ section {
     padding: 50px 20px;
     transition: all 0.55s ease;
   }
-  .navlist a{
-    margin: 10px 0;
-    display: block;
-    margin-left: 0;
+  .banner-text h1{
+    font-size: 50px;
   }
-  .navlist.open{
-    right: 0;
-  }
- }
-
- @media (max-width: 680px){
-  .hero-text h1{
-    font-size: 60px;
-  }
-  .hero-text h4{
-    font-size: 16px;
-  }
-  .hero-text p{
+  .banner-text h4{
     font-size: 14px;
   }
-  .hero-text a{
+  .banner-text p{
     font-size: 12px;
   }
-  .hero-text a + a{
-    margin-left: 10px;
+  .banner-text a{
+    font-size: 10px;
   }
-  .hero-text a.ctaa{
-    margin-left: 10px;
+  .banner-text a + a{
+    margin-left: 5px;
   }
-  .hero-img img{
-    width: 100%;
-    height: auto;
+  .banner-text a.ctaa{
+    margin-top: 10px;
   }
- }
+  .inputbox, .shorten-button, .response-box {
+    width: 90%;
+  }
+}
+
+@media (max-width: 319px){
+  .navlist{
+    display: none;
+  }
+  .banner-text h1{
+    font-size: 30px;
+  }
+  .banner-text h4{
+    font-size: 10px;
+  }
+  .banner-text p{
+    font-size: 8px;
+  }
+  .banner-text a{
+    font-size: 6px;
+  }
+  .banner-text a + a{
+    font-size: 2px;
+  }
+  .banner-text a.ctaa{
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  .inputbox, .shorten-button, .response-box {
+    width: 90%;
+  }
+}
 
  .inputbox {
   width: 80%;
@@ -321,6 +455,7 @@ section {
   font-size: 1.2em;
   color: white;
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .result-url {
