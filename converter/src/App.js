@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import banner_image from "./banner-main-alt.png";
 import "./App.css";
+const apiUrl = process.env.REACT_APP_API_ENDPOINT;
+
 
 function UrlShortener() {
   const [originalUrl, setOriginalUrl] = useState("");  // State to store the original URL
@@ -17,7 +19,7 @@ function UrlShortener() {
 
     try {
       const response = await axios.post(  // Send a POST request to the URL shortening API
-        "https://ipjesjo0va.execute-api.ap-southeast-2.amazonaws.com/url-shortner",
+      apiUrl, // Your API endpoint to AWS API Gateway integarted with Lambda
         originalUrl, // Sending the original URL as part of the request body
         {
           headers: {
