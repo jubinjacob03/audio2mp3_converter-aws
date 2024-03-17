@@ -27,7 +27,7 @@ header {
 
 
 .logo {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
   color: white;
 }
@@ -88,10 +88,11 @@ section {
   line-height: 1;
   color: white;
   margin: 0 0 45px;
+  letter-spacing: 1.75px;
 }
 
 .banner-text h4{
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: white;
   margin-bottom: 10px;
@@ -319,7 +320,7 @@ section {
     font-size: 60px;
   }
   .banner-text h4{
-    font-size: 16px;
+    font-size: 15px;
   }
   .banner-text p{
     font-size: 14px;
@@ -466,6 +467,14 @@ section {
   display: inline;
   margin-top: 10px;
   text-align: center;
+  white-space: nowrap;
+}
+
+.result-box{
+  animation: fadeIn 1s;
+  border: 2.25px solid #ccc;
+  padding: 18px 30px;
+  min-width: 100%;
 }
 
 .desc{
