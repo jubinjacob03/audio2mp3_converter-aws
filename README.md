@@ -1,34 +1,33 @@
 # Serverless React Application with AWS Lambda
 
-This project focuses on building a serverless web application using React for the frontend and AWS Lambda for the backend.
+This project focuses on building a serverless web application using React (frontend) and AWS Lambda (backend).
 
 ## Introduction
 
-The aim of this project is to demonstrate the implementation of a serverless architecture for web applications. It utilizes React to create a dynamic and interactive user interface, while AWS Lambda functions handle backend logic and processing tasks. The serverless approach offers scalability, cost-effectiveness, and simplified infrastructure management.
+The aim of this project is to demonstrate the implementation of a serverless architecture for web applications. It utilizes React to create a dynamic and interactive user interface, while AWS Lambda functions handle backend logic and processing tasks.
 
 ## Features
 
 - **React Frontend**: The frontend of the application is built using React, providing a responsive and user-friendly interface.
 - **AWS Lambda Backend**: Backend logic and processing tasks are handled by AWS Lambda functions, eliminating the need for server management and infrastructure provisioning.
 - **API Gateway Integration**: API Gateway is used to expose Lambda functions as RESTful APIs, enabling communication between the frontend and backend.
-- **Authentication**: Authentication and authorization mechanisms can be implemented using AWS Cognito or other authentication providers to secure the application.
-- **Data Storage**: Data storage options such as Amazon DynamoDB, S3, or Aurora Serverless can be integrated to persist application data.
-- **CI/CD Pipeline**: Continuous integration and deployment pipelines can be set up using AWS CodePipeline and AWS CodeBuild for automated deployment of updates.
+- **Tiny URL PHP**: The implementation of a tiny URL system guarantees the safeguarding of the shortened URL's security and integrity, mitigating risks associated with the potential generation of malicious links through random methods.
 
 ## Setup Instructions
 
 1. **Clone the Repository**: 
    ```bash
    git clone https://github.com/jubinjacob03/shortify_url-shortner-aws_lambda.git
-   cd repository
+   cd shortify_url-shortner-aws_lambda
+   cd converter
    ```
-2. **Install all dependancies**
+2. **Install all dependancies ( perform after changing the working dir to <i>converter</i> folder)**
     ```bash
     npm install
     ```
-3. **Configure AWS Credentials:**  Set up AWS credentials and configure the AWS CLI on your local machine to interact with AWS services.
+3. **Configure AWS Credentials:**  Set up AWS credentials and configure the AWS CLI on your local machine to interact with AWS services or you can use AWS web console.
 
-4. **Deploy Lambda Functions:**  Deploy Lambda functions using the AWS Serverless Application Model (SAM) or AWS Management Console.
+4. **Deploy Lambda Functions:**  Deploy Lambda functions using the AWS Serverless Application Model (SAM) or AWS Management Console. When selecting the lambda function choose runtime as <code>Node.js 20.x</code> and  architecture as <code>x86_64</code>
 
 5. **Deploy Frontend:**  Build the React application and deploy it to a static hosting service such as AWS S3 or AWS Amplify.
 
